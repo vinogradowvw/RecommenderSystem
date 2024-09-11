@@ -59,7 +59,7 @@ class TextVectorizer:
 
     def tfidf_vectorize(self, text: str) -> np.ndarray:
         preprocessed_text = self.__preprocess_text(text)
-        vec = self.__TfidfVectorizer(preprocessed_text)
+        vec = self.__TfidfVectorizer.transform([preprocessed_text])
         return vec.toarray()[0]
 
     def bert_vectorize(self, text: str) -> np.ndarray:
@@ -74,5 +74,5 @@ class TextVectorizer:
         return outputs.last_hidden_state.mean(dim=1).numpy()[0]
 
     def bow_vectorize(self, tokens: list) -> np.ndarray:
-        doc = self.__nlp(" ".join(tokens))
-        return self.__CountVectorizer.transform(" ".join(set(doc._.preprocessed_text.split(" "))))
+        preprocessed_tags = self.__preprocess_text(" ".join(tokens))
+        return self.__CountVectorizer.transform([preprocessed_tags]).toarray()[0]
