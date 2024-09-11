@@ -26,7 +26,14 @@ class UserService:
 
         post = self.__post_vec_repo.find_by_id(post_id)
         old_user = self.__user_vec_repo.find_by_id(user_id)
-        new_user = UserVec(id=user_id, weight_count=old_user.weight_count)
+        new_user = UserVec(
+            id=user_id,
+            weight_count=old_user.weight_count,
+            bert_descr_vector=old_user.bert_descr_vector,
+            tfidf_descr_vector=old_user.tfidf_descr_vector,
+            image_vector=old_user.image_vector,
+            tags_vector=old_user.tags_vector,
+        )
 
         for vector in ["bert_descr_vector", "tfidf_descr_vector", "image_vector", "tags_vector"]:
 
@@ -36,8 +43,26 @@ class UserService:
             new_user_vector = (old_user_vector * old_user.weight_count + weight * post_vector) / \
                           (old_user.weight_count + weight)
 
-            setattr(new_user, vector, new_user_vector)
+            setattr(new_user, vector, new_user_vector.tolist())
 
         new_user.weight_count = old_user.weight_count + weight
 
         self.__user_vec_repo.upsert(new_user)
+
+    def init(self, id: int):
+        dimentions = {}
+
+        for field in self.__user_vec_repo.schema.fields:
+            if (field.params):
+                dimentions[field.name] = field.params['dim']
+
+        user = UserVec(
+            id=id,
+            bert_descr_vector=[0]*dimentions['bert_descr_vector'],
+            tfidf_descr_vector=[0]*dimentions['tfidf_descr_vector'],
+            image_vector=[0]*dimentions['image_vector'],
+            tags_vector=[0]*dimentions['tags_vector'],
+            weight_count=0,
+        )
+
+        self.__user_vec_repo.upsert(user)

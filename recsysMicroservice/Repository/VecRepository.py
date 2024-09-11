@@ -18,6 +18,7 @@ class VecRepository(ABC, Generic[Entity]):
         )
         self.__collection = Collection(self.entity_class.collection_name())
         self.__collection.load()
+        self.schema = self.__collection.schema
         self._milvus_client.load_collection(
                 collection_name=self.entity_class.collection_name(),
                 replica_number=1
