@@ -15,10 +15,10 @@ class TextVectorizer:
 
         self.__nlp = self.__create_nlp()
 
-        with open('../Models/TfidfVectorizer.pkl', 'rb') as file:
+        with open('./Models/TfidfVectorizer.pkl', 'rb') as file:
             self.__TfidfVectorizer = pickle.load(file)
 
-        with open('../Models/CountVectorizer.pkl', 'rb') as file:
+        with open('./Models/CountVectorizer.pkl', 'rb') as file:
             self.__CountVectorizer = pickle.load(file)
 
         self.__bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
