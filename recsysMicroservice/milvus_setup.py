@@ -22,7 +22,7 @@ def setup():
         port=milvus_port
     )
 
-    m_client = MilvusClient("http://localhost:19530")
+    m_client = MilvusClient("http://{}:{}".format(milvus_host, milvus_port))
 
     if m_client.has_collection('post'):
         m_client.drop_collection('post')

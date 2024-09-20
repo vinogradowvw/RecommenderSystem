@@ -10,12 +10,13 @@ Entity = TypeVar("Entity", bound=VectorObject)
 class VecRepository(ABC, Generic[Entity]):
 
     def __init__(self, entity_class: Type[Entity]):
+        print(os.getenv('MILVUS_HOST'))
         milvus_host = os.getenv("MILVUS_HOST", "localhost")
         milvus_port = os.getenv("MILVUS_PORT", "19530")
         self._milvus_client = MilvusClient("http://{}:{}".format(milvus_host, milvus_port))
         self.entity_class = entity_class
         self.__connection = connections.connect(
-            alias="default", 
+            alias="default",
             host=milvus_host,
             port=milvus_port
         )
