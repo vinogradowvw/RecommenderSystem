@@ -1,5 +1,6 @@
 from pymilvus import DataType, MilvusClient, connections, Collection
 import pandas as pd
+import os
 
 def setup():
 
@@ -13,10 +14,12 @@ def setup():
         for vector_name in ['bert_descr_vector', 'tfidf_descr_vector', 'image_vector', 'tags_vector']:
             post[vector_name] = post[vector_name].tolist()
 
+    milvus_host = os.getenv("MILVUS_HOST", "localhost")
+    milvus_port = os.getenv("MILVUS_PORT", "19530")
     connections.connect(
-      alias="default",
-      host='localhost',
-      port='19530'
+        alias="default", 
+        host=milvus_host,
+        port=milvus_port
     )
 
     m_client = MilvusClient("http://localhost:19530")

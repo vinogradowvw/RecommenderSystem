@@ -2,6 +2,7 @@ from abc import ABC
 from pymilvus import MilvusClient, AnnSearchRequest, Collection, RRFRanker, connections
 from ..Domain.VectorObject import VectorObject
 from typing import List, Generic, TypeVar, Type
+import os
 
 Entity = TypeVar("Entity", bound=VectorObject)
 
@@ -9,12 +10,14 @@ Entity = TypeVar("Entity", bound=VectorObject)
 class VecRepository(ABC, Generic[Entity]):
 
     def __init__(self, entity_class: Type[Entity]):
-        self._milvus_client = MilvusClient("http://localhost:19530")
+        milvus_host = os.getenv("MILVUS_HOST", "localhost")
+        milvus_port = os.getenv("MILVUS_PORT", "19530")
+        self._milvus_client = MilvusClient("http://{}:{}".format(milvus_host, milvus_port))
         self.entity_class = entity_class
         self.__connection = connections.connect(
             alias="default", 
-            host='localhost',
-            port='19530'
+            host=milvus_host,
+            port=milvus_port
         )
         self.__collection = Collection(self.entity_class.collection_name())
         self.__collection.load()
