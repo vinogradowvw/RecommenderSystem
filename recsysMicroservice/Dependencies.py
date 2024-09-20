@@ -1,10 +1,13 @@
+from recsysMicroservice import milvus_setup
 from .Service.PostService import PostService
 from .Service.UserService import UserService
 from .Repository.PostVecRepository import PostVecRepository
 from .Repository.UserVecRepository import UserVecRepository
 from .Service.Vectorizers.ImageVectorizer import ImageVectorizer
 from .Service.Vectorizers.TextVectorizer import TextVectorizer
+from .milvus_setup import setup
 
+setup()
 
 user_repository = UserVecRepository()
 post_repository = PostVecRepository()
