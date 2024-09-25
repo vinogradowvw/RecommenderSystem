@@ -1,17 +1,16 @@
-import torchvision.models as models
-from torchvision.transforms import Resize
-from torchvision.transforms import Normalize
-from torchvision.transforms import ToTensor
-from torch.autograd import Variable
 import numpy as np
 import torch
+import torchvision.models as models
+from torchvision.models import ResNet18_Weights
 from PIL import Image
+from torch.autograd import Variable
+from torchvision.transforms import Normalize, Resize, ToTensor
 
 
 class ImageVectorizer:
 
     def __init__(self) -> None:
-        self.__model = models.resnet18(pretrained=True)
+        self.__model = models.resnet18(weights=ResNet18_Weights.DEFAULT)
         self.__scaler = Resize((224, 224))
         self.__normalize = Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
