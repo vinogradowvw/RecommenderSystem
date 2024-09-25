@@ -28,11 +28,13 @@ class VecRepository(ABC, Generic[Entity]):
                 replica_number=1
         )
 
-
-
     def upsert(self, vector_object: Entity) -> None:
         collection_name = self.entity_class.collection_name()
         self._milvus_client.upsert(collection_name=collection_name, data=vector_object.model_dump())
+
+    def delete_by_id(self, id: int):
+        collection_name = self.entity_class.collection_name()
+        self._milvus_client.delete(collection_name=collection_name, ids=[id])
 
     def find_by_id(self, id: int) -> Entity:
         collection_name = self.entity_class.collection_name()

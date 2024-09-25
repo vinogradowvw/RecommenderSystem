@@ -59,3 +59,7 @@ class PostService:
                            image_vector=image_vector.tolist())
 
         self.__post_vec_repo.upsert(post_vec)
+
+    def delete_by_id(self, id: int):
+        self.__post_vec_repo.delete_by_id(id)
+

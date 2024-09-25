@@ -49,6 +49,9 @@ class UserService:
 
         self.__user_vec_repo.upsert(new_user)
 
+    def delete_by_id(self, id: int):
+        self.__user_vec_repo.delete_by_id(id)
+
     def init(self, id: int):
         dimentions = {}
 

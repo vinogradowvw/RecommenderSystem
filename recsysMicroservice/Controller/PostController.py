@@ -7,6 +7,14 @@ from ..Dependencies import get_post_service
 router = APIRouter(prefix="/post")
 
 
+@router.delete("/{id}")
+async def delete_post_by_id(
+    id: int,
+    post_service: PostService = Depends(get_post_service)
+):
+    post_service.delete_by_id(id)
+
+
 @router.get("/recommendations/post/{post_id}", response_model=List[int])
 async def get_recommendations_by_post(
     post_id: int,
@@ -27,7 +35,7 @@ async def get_recommendations_by_user(
     return post_ids
 
 
-@router.post("/save")
+@router.post("")
 async def save_post(
     post: PostDTO,
     post_service: PostService = Depends(get_post_service)
