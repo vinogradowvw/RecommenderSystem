@@ -95,13 +95,10 @@ services:
 
   app:
     container_name: app
-    image: backend/app:latest
+    image: recommender-system/app:latest
     restart: always
     depends_on:
-        - db
         - minio
-        - mc
-        - adminer
         - etcd
         - standalone
     environment:
