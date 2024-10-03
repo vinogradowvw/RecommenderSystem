@@ -1,16 +1,4 @@
-version: '3.7'
-
 services:
-
-  db:
-    image: postgres:16
-    container_name: demo-db
-    environment:
-      POSTGRES_DB: market_place
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
 
   minio:
     image: minio/minio:latest
@@ -30,27 +18,21 @@ services:
       timeout: 20s
       retries: 3
 
-  mc:
-    image: minio/mc:latest
-    container_name: minio-client
-    depends_on:
-      - minio
-    entrypoint: >
-      /bin/sh -c "
-      while ! nc -z minio 9000;
-      do
-        echo 'Waiting for MinIO to be available...';
-        sleep 2;
-      done;
-      mc alias set myminio http://minio:9000 minioadmin minioadmin &&
-      mc mb myminio/images;
-      "
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8081:8081
+  # mc:
+  #   image: minio/mc:latest
+  #   container_name: minio-client
+  #   depends_on:
+  #     - minio
+  #   entrypoint: >
+  #     /bin/sh -c "
+  #     while ! nc -z minio 9000;
+  #     do
+  #       echo 'Waiting for MinIO to be available...';
+  #       sleep 2;
+  #     done;
+  #     mc alias set myminio http://minio:9000 minioadmin minioadmin &&
+  #     mc mb myminio/images;
+  #     "
 
   etcd:
     container_name: milvus-etcd
@@ -114,4 +96,4 @@ services:
 
 networks:
   default:
-    name: marketplace
+    name: recommendersystem

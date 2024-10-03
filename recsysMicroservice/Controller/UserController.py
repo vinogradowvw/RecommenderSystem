@@ -21,6 +21,6 @@ async def init_user(user_id: int, user_service: UserService = Depends(get_user_s
     user_service.init(id=user_id)
 
 
-@router.delete("{id}")
+@router.delete("/{id}")
 async def delete_by_id(id: int, user_service: UserService = Depends(get_user_service)):
     user_service.delete_by_id(id)

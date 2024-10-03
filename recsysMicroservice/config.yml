@@ -1,0 +1,5 @@
+Vectors:
+  BERT: 768 
+  TFIDF: 1253
+  IMAGE: 512
+  TAGS: 2438
