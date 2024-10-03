@@ -105,7 +105,7 @@ services:
       - MILVUS_HOST=standalone
       - MILVUS_PORT=19530
     ports:
-      - "8000:8080"
+      - "8000:8000"
 
 networks:
   default:
