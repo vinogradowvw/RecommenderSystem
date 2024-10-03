@@ -93,8 +93,8 @@ services:
       - "etcd"
       - "minio"
 
-  app:
-    container_name: app
+  recommender-system:
+    container_name: recommender-system
     image: recommender-system/app:latest
     restart: always
     depends_on:
