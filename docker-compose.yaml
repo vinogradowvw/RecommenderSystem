@@ -93,19 +93,19 @@ services:
       - "etcd"
       - "minio"
 
-  # recommender-system:
-  #   container_name: recommender-system
-  #   image: recommender-system/app:latest
-  #   restart: always
-  #   depends_on:
-  #       - minio
-  #       - etcd
-  #       - standalone
-  #   environment:
-  #     - MILVUS_HOST=standalone
-  #     - MILVUS_PORT=19530
-  #   ports:
-  #     - "8000:8000"
+  recommender-system:
+    container_name: recommender-system
+    image: recommender-system/app:latest
+    restart: always
+    depends_on:
+        - minio
+        - etcd
+        - standalone
+    environment:
+      - MILVUS_HOST=standalone
+      - MILVUS_PORT=19530
+    ports:
+      - "8000:8000"
 
 networks:
   default:
