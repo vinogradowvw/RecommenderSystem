@@ -24,15 +24,15 @@ class PostService:
         self.__text_vectorizer = text_vectorizer
         self.__image_vectorizer = image_vectorizer
 
-    def get_recommended_posts_by_user_id(self, user_id: int, n: int) -> List[int]:
+    def get_recommended_posts_by_user_id(self, user_id: int, limit: int) -> List[int]:
         user = self.__user_vec_repo.find_by_id(user_id)
-        posts = self.__post_vec_repo.find_similar(user, n)
+        posts = self.__post_vec_repo.find_similar(user, limit)
         post_ids = [post.id for post in posts]
         return post_ids
 
-    def get_recommended_posts_by_post_id(self, post_id: int, n: int) -> List[int]:
+    def get_recommended_posts_by_post_id(self, post_id: int, limit: int) -> List[int]:
         post = self.__post_vec_repo.find_by_id(post_id)
-        posts = self.__post_vec_repo.find_similar(post, n)
+        posts = self.__post_vec_repo.find_similar(post, limit)
         post_ids = [post.id for post in posts]
         return post_ids
 

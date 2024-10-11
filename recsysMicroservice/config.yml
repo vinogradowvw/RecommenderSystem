@@ -3,3 +3,13 @@ Vectors:
   TFIDF: 1253
   IMAGE: 512
   TAGS: 2438
+
+Kafka:
+  consumer:
+    bootstrap.servers: 18.196.226.202:9094
+    group.id: requests-for-reсsys
+    auto.offset.reset: earliest
+  producer:
+    bootstrap.servers: 18.196.226.202:9094
+  consumer.topic: requests-for-reсsys
+  producer.topic: recommendation-responses

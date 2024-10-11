@@ -16,9 +16,9 @@ class UserService:
         self.__user_vec_repo = user_vec_repo
         self.__post_vec_repo = post_vec_repo
 
-    def get_recommended_users_by_user_id(self, user_id: int, n: int) -> List[int]:
+    def get_recommended_users_by_user_id(self, user_id: int, limit: int) -> List[int]:
         user = self.__user_vec_repo.find_by_id(user_id)
-        users = self.__user_vec_repo.find_similar(user, n)
+        users = self.__user_vec_repo.find_similar(user, limit)
         user_ids = [user.id for user in users]
         return user_ids
 
