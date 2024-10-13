@@ -7,9 +7,9 @@ Vectors:
 Kafka:
   consumer:
     bootstrap.servers: 18.196.226.202:9094
-    group.id: requests-for-reсsys
+    group.id: requests-for-recsys
     auto.offset.reset: earliest
   producer:
     bootstrap.servers: 18.196.226.202:9094
-  consumer.topic: requests-for-reсsys
+  consumer.topic: requests-for-recsys
   producer.topic: recommendation-responses

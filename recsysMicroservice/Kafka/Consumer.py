@@ -2,6 +2,7 @@ from confluent_kafka import Consumer
 from confluent_kafka import KafkaException, KafkaError
 import yaml
 import inspect
+import json
 from recsysMicroservice.Dependencies import get_kafka_producer, get_post_service, get_user_service
 
 
@@ -19,7 +20,7 @@ class KafkaConsumer():
 
     def __consume(self):
         try:
-            self.__consumer.subscribe([self.__kafka_conf["consumer.topic"]])
+            self.__consumer.subscribe(topics=[self.__kafka_conf["consumer.topic"]])
             print('Strarting consuming from topic {}'.format(self.__kafka_conf["consumer.topic"]))
 
             while True:
@@ -34,9 +35,12 @@ class KafkaConsumer():
                         #     (msg.topic(), msg.partition(), msg.offset()))
                         continue
                     elif msg.error():
+                        print(msg.error())
                         raise KafkaException(msg.error())
                 else:
-                    value = msg.value()
+                    value = json.loads(msg.value().decode('utf-8'))
+                    print("Consumed message with value:")
+                    print(value)
                     service_name, method_name = value['type'].split(".")
                     service = getattr(self, service_name)
                     method = getattr(service, method_name)
@@ -47,6 +51,8 @@ class KafkaConsumer():
                         if param_name != "self":
                             parameter_list.append(param_name.split(':')[0])
 
+                    print(parameter_list)
+
                     args = {param: value[param] for param in parameter_list if param in value}
 
                     if (method_name.split("_")[0] == "get"):
@@ -56,7 +62,6 @@ class KafkaConsumer():
                         method(**args)
 
                     self.__consumer.commit(asynchronous=True)
-
         finally:
             self.__consumer.close()
 

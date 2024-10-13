@@ -52,7 +52,7 @@ class UserService:
     def delete_by_id(self, id: int):
         self.__user_vec_repo.delete_by_id(id)
 
-    def init(self, id: int):
+    def init(self, user_id: int):
         dimentions = {}
 
         for field in self.__user_vec_repo.schema.fields:
@@ -60,7 +60,7 @@ class UserService:
                 dimentions[field.name] = field.params['dim']
 
         user = UserVec(
-            id=id,
+            id=user_id,
             bert_descr_vector=[0]*dimentions['bert_descr_vector'],
             tfidf_descr_vector=[0]*dimentions['tfidf_descr_vector'],
             image_vector=[0]*dimentions['image_vector'],
