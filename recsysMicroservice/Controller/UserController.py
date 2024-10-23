@@ -18,7 +18,7 @@ async def user_purchased(user_id: int, post_id: int, user_service: UserService =
 
 @router.post("/init/{user_id}")
 async def init_user(user_id: int, user_service: UserService = Depends(get_user_service)):
-    user_service.init(id=user_id)
+    user_service.init(user_id=user_id)
 
 
 @router.delete("/{id}")

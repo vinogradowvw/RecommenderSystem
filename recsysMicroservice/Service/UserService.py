@@ -2,7 +2,7 @@ from typing import List
 
 import numpy as np
 
-from injector import inject
+# from injector import inject
 
 from ..Domain.UserVec import UserVec
 from ..Repository.PostVecRepository import PostVecRepository
@@ -11,7 +11,7 @@ from ..Repository.UserVecRepository import UserVecRepository
 
 class UserService:
 
-    @inject
+    # @inject
     def __init__(self, user_vec_repo: UserVecRepository, post_vec_repo: PostVecRepository):
         self.__user_vec_repo = user_vec_repo
         self.__post_vec_repo = post_vec_repo

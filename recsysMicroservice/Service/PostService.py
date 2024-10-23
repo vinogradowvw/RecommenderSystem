@@ -3,7 +3,7 @@ from typing import List
 import requests
 from PIL import Image
 
-from injector import inject
+# from injector import inject
 from ..Domain.PostDTO import PostDTO
 from ..Domain.PostVec import PostVec
 from ..Repository.PostVecRepository import PostVecRepository
@@ -16,7 +16,7 @@ from .Vectorizers.TextVectorizer import TextVectorizer
 
 class PostService:
 
-    @inject
+    # @inject
     def __init__(self, post_vec_repo: PostVecRepository, user_vec_repo: UserVecRepository,
                  text_vectorizer: TextVectorizer, image_vectorizer: ImageVectorizer):
         self.__post_vec_repo = post_vec_repo
