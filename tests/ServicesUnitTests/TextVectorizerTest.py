@@ -11,11 +11,11 @@ class TextVectorizerUnitTest(unittest.TestCase):
     def setUpClass(cls):
         cls._vectorizer = TextVectorizer()
 
-    def test_tfidf_vectorize():
+    def test_tfidf_vectorize(self):
         pass
 
-    def test_bow_vectorize():
+    def test_bow_vectorize(self):
         pass
 
-    def test_bert_vectorize():
+    def test_bert_vectorize(self):
         pass
