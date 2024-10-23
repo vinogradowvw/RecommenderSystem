@@ -1,5 +1,6 @@
 from confluent_kafka import Producer
 import yaml
+import json
 
 class KafkaProducer():
 
@@ -11,9 +12,11 @@ class KafkaProducer():
         self.__producer = Producer(self.__kafka_conf['producer'])
 
     def produce(self, data, correlation_id):
+        print('Proucing data to kafka')
+        print(data)
         self.__producer.produce(
-            topic=self.__kafka_conf["producer_topic"],
-            value={"data": data},
+            topic=self.__kafka_conf["producer.topic"],
+            value=json.dumps({"data": data}),
             headers=[('Correlation-ID', correlation_id)]
         )
 

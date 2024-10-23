@@ -38,7 +38,7 @@ class VecRepository(ABC, Generic[Entity]):
     def find_by_id(self, id: int) -> Entity:
         collection_name = self.entity_class.collection_name()
         item = self._milvus_client.get(collection_name=collection_name, ids=[id])
-        return self.entity_class(**item[0])
+        return self.entity_class(**(item[0]))
 
     def find_similar(self, vector_object: VectorObject, n: int) -> List[Entity]:
 

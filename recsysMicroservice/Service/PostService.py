@@ -37,7 +37,7 @@ class PostService:
         return post_ids
 
     def upsert(self, post: PostDTO) -> None:
-
+        print(post)
         tags_vector = self.__text_vectorizer.bow_vectorize(post.tags)
 
         tfidf_descr_vector = self.__text_vectorizer.tfidf_vectorize(post.description)
@@ -45,7 +45,7 @@ class PostService:
 
         image_vectors = []
         for image in post.images:
-            response = requests.get("http://localhost:8080/image/{}".format(image))
+            response = requests.get("http://35.159.155.184:8080/image/{}".format(image))
 
             with Image.open(BytesIO(response.content)) as im:
                 image_vectors.append(self.__image_vectorizer.resnet_vectorize(im))

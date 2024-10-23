@@ -26,7 +26,8 @@ class KafkaConsumer():
             while True:
                 msg = self.__consumer.poll(timeout=1.0)
 
-                if msg is None: continue
+                if msg is None:
+                    continue
 
                 if msg.error():
                     if msg.error().code() == KafkaError._PARTITION_EOF:
@@ -45,18 +46,13 @@ class KafkaConsumer():
                     service = getattr(self, service_name)
                     method = getattr(service, method_name)
                     parameters = inspect.signature(method).parameters
-                    parameter_list = []
 
+                    args = {}
                     for param_name, param in parameters.items():
                         if param_name != "self":
-                            parameter_list.append(param_name.split(':')[0])
-
-                    print(parameter_list)
-
-                    args = {param: value[param] for param in parameter_list if param in value}
+                            args[param_name] = param.annotation(**value[param_name])
 
                     if (method_name.split("_")[0] == "get"):
-
                         self.__producer.produce(method(**args), correlation_id=dict(msg.headers()).get('Correlation-ID'))
                     else:
                         method(**args)
@@ -64,4 +60,3 @@ class KafkaConsumer():
                     self.__consumer.commit(asynchronous=True)
         finally:
             self.__consumer.close()
-
