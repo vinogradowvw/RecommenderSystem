@@ -10,4 +10,4 @@ COPY ./Notebooks /code/Notebooks
 COPY ./recsysMicroservice /code/recsysMicroservice
 COPY ./Models /code/Models
 
-CMD ["hypercorn", "recsysMicroservice.App:app"]
+CMD ["uvicorn", "recsysMicroservice.App:app", "--reload", "--log-level", "debug"]
